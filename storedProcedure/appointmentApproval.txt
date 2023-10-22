@@ -1,0 +1,12 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_book_appts_update_pending_status`(
+    IN _AppointmentID INT,
+    IN _isPending TINYINT(1)
+)
+BEGIN
+    UPDATE book_appts
+    SET
+        isPending = _isPending
+    WHERE AppointmentID = _AppointmentID;
+    
+    SELECT ROW_COUNT() AS 'affectedRows';
+END

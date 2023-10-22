@@ -1,0 +1,20 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_book_appts_update_booleans`(
+    IN _AppointmentID INT,
+    IN _isVeterinaryCare TINYINT(1),
+    IN _isPetGrooming TINYINT(1),
+    IN _isPetBoarding TINYINT(1),
+    IN _isPetSpa TINYINT(1),
+    IN _isPending TINYINT(1)
+)
+BEGIN
+    UPDATE book_appts
+    SET
+        isVeterinaryCare = _isVeterinaryCare,
+        isPetGrooming = _isPetGrooming,
+        isPetBoarding = _isPetBoarding,
+        isPetSpa = _isPetSpa,
+        isPending = _isPending
+    WHERE AppointmentID = _AppointmentID;
+    
+    SELECT ROW_COUNT() AS 'affectedRows';
+END;

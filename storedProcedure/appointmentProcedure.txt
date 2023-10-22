@@ -1,0 +1,66 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_book_appts_add_or_edit`(
+    IN _AppointmentID INT,
+    IN _isVeterinaryCare TINYINT(1),
+    IN _isPetGrooming TINYINT(1),
+    IN _isPetBoarding TINYINT(1),
+    IN _isPetSpa TINYINT(1),
+    IN _isPending TINYINT(1),
+    IN _AppointmentTime VARCHAR(45),
+    IN _AppointmentDate VARCHAR(45),
+    IN _FirstName VARCHAR(15),
+    IN _LastName VARCHAR(15),
+    IN _Email VARCHAR(30),
+    IN _PhoneNo INT,
+    IN _Message VARCHAR(155)
+)
+BEGIN
+    IF _AppointmentID = 0 THEN
+        INSERT INTO book_appts(
+            isVeterinaryCare,
+            isPetGrooming,
+            isPetBoarding,
+            isPetSpa,
+            isPending,
+            AppointmentTime,
+            AppointmentDate,
+            FirstName,
+            LastName,
+            Email,
+            PhoneNo,
+            Message
+        )
+        VALUES(
+            _isVeterinaryCare,
+            _isPetGrooming,
+            _isPetBoarding,
+            _isPetSpa,
+            _isPending,
+            _AppointmentTime,
+            _AppointmentDate,
+            _FirstName,
+            _LastName,
+            _Email,
+            _PhoneNo,
+            _Message
+        );
+    ELSE
+        UPDATE book_appts
+        SET
+            isVeterinaryCare = _isVeterinaryCare,
+            isPetGrooming = _isPetGrooming,
+            isPetBoarding = _isPetBoarding,
+            isPetSpa = _isPetSpa,
+            isPending = _isPending,
+            AppointmentTime = _AppointmentTime,
+            AppointmentDate = _AppointmentDate,
+            FirstName = _FirstName,
+            LastName = _LastName,
+            Email = _Email,
+            PhoneNo = _PhoneNo,
+            Message = _Message
+        WHERE AppointmentID = _AppointmentID;
+    END IF;
+
+    SELECT ROW_COUNT() AS 'affectedRows';
+
+END
